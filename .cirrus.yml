@@ -65,7 +65,7 @@ install_ubuntu_prerequisites_template: &INSTALL_UBUNTU_PREREQUISITES_TEMPLATE
     apt-get -q update
     apt-get -yq install \
       git-core cmake ninja-build $gcc_pkg \
-      llvm-dev zlib1g-dev libclang-common-$LIBCLANG_COMMON_VERSION-dev \
+      llvm-dev:i386 zlib1g-dev libclang-common-$LIBCLANG_COMMON_VERSION-dev \
       $libcurl_pkg curl gdb python tzdata unzip zip \
       $EXTRA_APT_PACKAGES
     # Use ld.gold per default, so that LTO is tested
