@@ -57,8 +57,7 @@ install_ubuntu_prerequisites_template: &INSTALL_UBUNTU_PREREQUISITES_TEMPLATE
       dpkg --add-architecture i386
       gcc_pkg="g++-multilib"
       libcurl_pkg="libcurl4 libcurl4:i386"
-      set(CMAKE_C_FLAGS -m32)
-      set(CMAKE_CXX_FLAGS -m32)
+ 
     else
       gcc_pkg="g++"
       libcurl_pkg="libcurl4"
@@ -118,7 +117,7 @@ task:
   environment:
     CI_OS: linux
     LIBCLANG_COMMON_VERSION: "6.0"
-    EXTRA_CMAKE_FLAGS: "-DMULTILIB=ON -DRT_SUPPORT_SANITIZERS=ON -DBUILD_LTO_LIBS=ON -DLDC_INSTALL_LTOPLUGIN=ON -DLDC_INSTALL_LLVM_RUNTIME_LIBS=ON"
+    EXTRA_CMAKE_FLAGS: "-DCMAKE_CXX_FLAGS=-m32 -DCMAKE_C_FLAGS=-m32 -DMULTILIB=ON -DRT_SUPPORT_SANITIZERS=ON -DBUILD_LTO_LIBS=ON -DLDC_INSTALL_LTOPLUGIN=ON -DLDC_INSTALL_LLVM_RUNTIME_LIBS=ON"
     PARALLELISM: 8
   << : *INSTALL_UBUNTU_PREREQUISITES_TEMPLATE
   << : *COMMON_STEPS_TEMPLATE
@@ -142,37 +141,7 @@ task:
     gdmd --version
   << : *COMMON_STEPS_TEMPLATE
 
-task:
-  name: macOS 10.15 x64
-  osx_instance:
-    image: catalina-xcode
-  timeout_in: 60m
-  environment:
-    CI_OS: osx
-    LLVM_VERSION: 10.0.0
-    EXTRA_CMAKE_FLAGS: "-DBUILD_LTO_LIBS=ON"
-    # OS is preset to `darwin`
-    OS: osx
-    PATH: ${CIRRUS_WORKING_DIR}/../cmake/bin:${CIRRUS_WORKING_DIR}/../ninja:${CIRRUS_WORKING_DIR}/../llvm/bin:${PATH}
-    PARALLELISM: 4
-  << : *INSTALL_MACOS_PREREQUISITES_TEMPLATE
-  << : *COMMON_STEPS_TEMPLATE
-
-task:
-  name: macOS 10.15 x64 shared-libs-only
-  osx_instance:
-    image: catalina-xcode
-  timeout_in: 60m
-  environment:
-    CI_OS: osx
-    LLVM_VERSION: 10.0.0
-    EXTRA_CMAKE_FLAGS: "-DBUILD_SHARED_LIBS=ON -DBUILD_LTO_LIBS=ON"
-    # OS is preset to `darwin`
-    OS: osx
-    PATH: ${CIRRUS_WORKING_DIR}/../cmake/bin:${CIRRUS_WORKING_DIR}/../ninja:${CIRRUS_WORKING_DIR}/../llvm/bin:${PATH}
-    PARALLELISM: 4
-  << : *INSTALL_MACOS_PREREQUISITES_TEMPLATE
-  << : *COMMON_STEPS_TEMPLATE
+ 
 
 task:
   name: FreeBSD 12.1 x64
