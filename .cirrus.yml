@@ -57,6 +57,8 @@ install_ubuntu_prerequisites_template: &INSTALL_UBUNTU_PREREQUISITES_TEMPLATE
       dpkg --add-architecture i386
       gcc_pkg="g++-multilib"
       libcurl_pkg="libcurl4 libcurl4:i386"
+      set(CMAKE_C_FLAGS -m32)
+      set(CMAKE_CXX_FLAGS -m32)
     else
       gcc_pkg="g++"
       libcurl_pkg="libcurl4"
