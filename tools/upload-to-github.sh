@@ -11,7 +11,7 @@ releaseTag=$1
 artifact=$2
 artifactFilename=$(basename $artifact)
 
-releaseID="$(bash -c "curl -s https://api.github.com/repos/ldc-developers/ldc/releases/tags/$releaseTag | grep -m 1 '^  \"id\":'")"
+releaseID="$(bash -c "curl -s https://api.github.com/repos/jackywyz/ldc/releases/tags/$releaseTag | grep -m 1 '^  \"id\":'")"
 releaseID=${releaseID:8:-1}
 
 echo "Uploading $artifact to GitHub release $releaseTag ($releaseID)..."
