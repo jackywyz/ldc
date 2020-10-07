@@ -157,8 +157,8 @@ set(LDC_EXE_NAME ${PROGRAM_PREFIX}${LDC_EXE}${PROGRAM_SUFFIX})
 set(LDMD_EXE_NAME ${PROGRAM_PREFIX}${LDMD_EXE}${PROGRAM_SUFFIX})
 
 # Setup D compiler flags (DMD syntax, which also works with LDMD).
-set(DDMD_DFLAGS "-wi")
-set(DDMD_LFLAGS "")
+set(DDMD_DFLAGS "-wi -m32")
+set(DDMD_LFLAGS "-m32 ")
 if(NOT MSVC_IDE)
     # for multi-config builds, these options have to be added later to the custom command
     if(CMAKE_BUILD_TYPE MATCHES "Debug")
