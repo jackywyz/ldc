@@ -96,7 +96,7 @@ void appendTargetArgsForGcc(std::vector<std::string> &args) {
   case Triple::ppc64le:
   case Triple::sparcv9:
   case Triple::nvptx64:
-    args.push_back(triple.isArch64Bit() ? "-m64" : "-m32");
+    //args.push_back(triple.isArch64Bit() ? "-m64" : "-m32");
     return;
 
   // MIPS does not have -m32/-m64 but requires -mabi=.
