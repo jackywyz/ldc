@@ -39,7 +39,7 @@ common_steps_template: &COMMON_STEPS_TEMPLATE
       artifactID=${CIRRUS_CHANGE_IN_REPO:0:8}
     fi
     artifactName=ldc2-$artifactID-$CI_OS-x86
-    mv installDir $artifactName
+    mv $installDir $artifactName
     chmod -R go=rX $artifactName
     gtar -cf - --owner=0 --group=0 $artifactName | 7za a artifacts/$artifactName.tar.xz -si -txz -mx9
   # Upload to GitHub release (only for commits on the master branch and tags)
