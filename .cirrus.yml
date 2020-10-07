@@ -28,7 +28,7 @@ common_steps_template: &COMMON_STEPS_TEMPLATE
       -DCMAKE_INSTALL_PREFIX=$installDir \
       -DINCLUDE_INSTALL_DIR=$installDir/import \
       "${extraFlags[@]}"
-    ninja -j$PARALLELISM all   all-test-runners
+    ninja -j$PARALLELISM all ldc2-unittest all-test-runners
     bin/ldc2 -version
   pack_script: |
     cd $CIRRUS_WORKING_DIR/..
