@@ -19,4 +19,4 @@ curl -s \
   -H "Authorization: token $GITHUB_TOKEN" \
   -H "Content-Type: application/octet-stream" \
   --data-binary @$artifact \
-  https://uploads.github.com/repos/ldc-developers/ldc/releases/$releaseID/assets?name=$artifactFilename
+  https://uploads.github.com/repos/jackywyz/ldc/releases/$releaseID/assets?name=$artifactFilename
