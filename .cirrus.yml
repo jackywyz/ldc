@@ -30,7 +30,7 @@ common_steps_template: &COMMON_STEPS_TEMPLATE
       "${extraFlags[@]}"
     ninja -j$PARALLELISM all   all-test-runners
     bin/ldc2 -version
-  pack_artifact_script: |
+  pack_script: |
     cd $CIRRUS_WORKING_DIR/..
     mkdir artifacts
     if [ -n "$CIRRUS_TAG" ]; then
@@ -43,7 +43,7 @@ common_steps_template: &COMMON_STEPS_TEMPLATE
     chmod -R go=rX $artifactName
     gtar -cf - --owner=0 --group=0 $artifactName | 7za a artifacts/$artifactName.tar.xz -si -txz -mx9
   # Upload to GitHub release (only for commits on the master branch and tags)
-  upload_to_github_script: |
+  upload_script: |
     cd $CIRRUS_WORKING_DIR
     if [ -n "$CIRRUS_TAG" ]; then
       tools/upload-to-github.sh $CIRRUS_TAG ../artifacts/ldc2-*.tar.xz
