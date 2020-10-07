@@ -30,6 +30,26 @@ common_steps_template: &COMMON_STEPS_TEMPLATE
       "${extraFlags[@]}"
     ninja -j$PARALLELISM all   all-test-runners
     bin/ldc2 -version
+  pack_artifact_script: |
+    cd $CIRRUS_WORKING_DIR/..
+    mkdir artifacts
+    if [ -n "$CIRRUS_TAG" ]; then
+      artifactID=${CIRRUS_TAG:1}
+    else
+      artifactID=${CIRRUS_CHANGE_IN_REPO:0:8}
+    fi
+    artifactName=ldc2-$artifactID-$CI_OS-x86
+    mv installDir $artifactName
+    chmod -R go=rX $artifactName
+    gtar -cf - --owner=0 --group=0 $artifactName | 7za a artifacts/$artifactName.tar.xz -si -txz -mx9
+  # Upload to GitHub release (only for commits on the master branch and tags)
+  upload_to_github_script: |
+    cd $CIRRUS_WORKING_DIR
+    if [ -n "$CIRRUS_TAG" ]; then
+      tools/upload-to-github.sh $CIRRUS_TAG ../artifacts/ldc2-*.tar.xz
+    elif [[ "$CIRRUS_PR" = "" && "$CIRRUS_BRANCH" = "master" ]]; then
+      tools/upload-to-github.sh CI ../artifacts/ldc2-*.tar.xz
+    fi  
   always:
     run_compiler_unittests_script: |
       cd $CIRRUS_WORKING_DIR/../build
@@ -106,6 +126,7 @@ install_macos_prerequisites_template: &INSTALL_MACOS_PREREQUISITES_TEMPLATE
 environment:
   CIRRUS_CLONE_DEPTH: 50
   HOST_LDC_VERSION: 1.22.0
+  GITHUB_TOKEN: ENCRYPTED[827353e3d46dba416803f75cc9d884b9de741a67d7ed02f8f99262927603b1b429ba1c57d928c36eca4e80650934ef6b]
 
 task:
   name: Ubuntu 18.04 x64 multilib rtSanitizers
