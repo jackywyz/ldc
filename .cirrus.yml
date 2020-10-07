@@ -32,6 +32,13 @@ common_steps_template: &COMMON_STEPS_TEMPLATE
     bin/ldc2 -version
   pack_script: |
     cd $CIRRUS_WORKING_DIR/..
+    cd build
+    ninja install > /dev/null
+    cd ..
+    perl -pi -e s?$PWD/install/?%%ldcbinarypath%%/../?g install/etc/ldc2.conf
+    perl -pi -e "s?,druntime-ldc\",?,druntime-ldc\", \"-gcc=$CC\",?" install/etc/ldc2.conf
+    cp $CIRRUS_WORKING_DIR/{LICENSE,packaging/README} install
+    cat install/etc/ldc2.conf
     mkdir artifacts
     if [ -n "$CIRRUS_TAG" ]; then
       artifactID=${CIRRUS_TAG:1}
