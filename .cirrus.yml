@@ -22,7 +22,7 @@ common_steps_template: &COMMON_STEPS_TEMPLATE
     mkdir build
     cd build
     IFS=$'\n' extraFlags=( $(xargs -n1 <<<"$EXTRA_CMAKE_FLAGS") )
-    CFLAGS=-m32 CXXFLAGS=-m32 cmake -G Ninja $CIRRUS_WORKING_DIR \
+    cmake -G Ninja $CIRRUS_WORKING_DIR \
       -DCMAKE_BUILD_TYPE=Release \
       -DD_COMPILER=$PWD/../host-ldc/bin/ldmd2 \
       -DCMAKE_INSTALL_PREFIX=$installDir \
