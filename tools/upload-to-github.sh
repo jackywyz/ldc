@@ -6,7 +6,7 @@ if [ "$#" -ne 2 ]; then
   echo "Usage: $0 <tag> <file> (and GITHUB_TOKEN environment variable)"
   exit 1
 fi
-if [[ "$CIRRUS_RELEASE" == "" ]]; then
+if [[ -z ${CIRRUS_RELEASE-} || "$CIRRUS_RELEASE" == "" ]]; then
   echo "Not a release. No need to deploy!"
   exit 0
 fi
