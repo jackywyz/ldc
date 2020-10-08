@@ -175,6 +175,7 @@ task:
 
 release_task:
   name: FreeBSD 12.1 x64
+  trigger_type: manual
   freebsd_instance:
     image_family: freebsd-12-1
     cpu: 4
