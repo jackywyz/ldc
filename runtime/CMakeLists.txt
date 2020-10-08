@@ -39,8 +39,8 @@ set(INCLUDE_INSTALL_DIR   ${CMAKE_INSTALL_PREFIX}/include/d   CACHE PATH   "Path
 set(BUILD_SHARED_LIBS     AUTO                                CACHE STRING "Whether to build the runtime as a shared library (ON|OFF|BOTH)")
 set(D_FLAGS               -w;-de;-dip1000;-preview=dtorfields CACHE STRING "Runtime D compiler flags, separated by ';'")
 set(D_EXTRA_FLAGS         "-m32"                                  CACHE STRING "Runtime extra D compiler flags, separated by ';'")
-set(D_FLAGS_DEBUG         -g;-link-defaultlib-debug;-d-debug  CACHE STRING "Runtime D compiler flags (debug libraries), separated by ';'")
-set(D_FLAGS_RELEASE       -O3;-release                        CACHE STRING "Runtime D compiler flags (release libraries), separated by ';'")
+set(D_FLAGS_DEBUG         -g;-link-defaultlib-debug;-d-debug;-m32  CACHE STRING "Runtime D compiler flags (debug libraries), separated by ';'")
+set(D_FLAGS_RELEASE       -O3;-release;-m32                        CACHE STRING "Runtime D compiler flags (release libraries), separated by ';'")
 set(COMPILE_ALL_D_FILES_AT_ONCE ON                            CACHE BOOL   "Compile all D files for the runtime libs in a single command line instead of separately. Disabling this is useful for many CPU cores and/or iterative development.")
 set(RT_ARCHIVE_WITH_LDC   ON                                  CACHE STRING "Whether to archive the static runtime libs via LDC instead of CMake archiver")
 set(RT_CFLAGS             "-m32"                                  CACHE STRING "Runtime extra C compiler flags, separated by ' '")
@@ -823,7 +823,7 @@ else()
     build_runtime_variants("" "${RT_CFLAGS}" "${LD_FLAGS}" "${LIB_SUFFIX}" libs_to_install)
     if(MULTILIB)
         # build multi versions
-        build_runtime_variants("-m${MULTILIB_SUFFIX}" "-m${MULTILIB_SUFFIX} ${RT_CFLAGS}" "-m${MULTILIB_SUFFIX} ${LD_CFLAGS}" "${MULTILIB_SUFFIX}" libs_to_install)
+        build_runtime_variants("-m${MULTILIB_SUFFIX}" "-m${MULTILIB_SUFFIX}  " "-m${MULTILIB_SUFFIX}  " "${MULTILIB_SUFFIX}" libs_to_install)
     endif()
 
     # Only build the host version of the jit runtime due to LLVM dependency.
