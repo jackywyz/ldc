@@ -171,7 +171,7 @@ task:
 
  
 
-task:
+release_task:
   name: FreeBSD 12.1 x64
   freebsd_instance:
     image_family: freebsd-12-1
