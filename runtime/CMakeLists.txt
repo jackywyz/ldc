@@ -823,7 +823,7 @@ else()
     build_runtime_variants("" "${RT_CFLAGS}" "${LD_FLAGS}" "${LIB_SUFFIX}" libs_to_install)
     if(MULTILIB)
         # build multi versions
-        build_runtime_variants("-m${MULTILIB_SUFFIX}" "-m${MULTILIB_SUFFIX}  ${RT_CFLAGS}" "-m${MULTILIB_SUFFIX}  ${LD_CFLAGS}" "${MULTILIB_SUFFIX}" libs_to_install)
+        build_runtime_variants("-m${MULTILIB_SUFFIX}" "-m${MULTILIB_SUFFIX}  ${RT_CFLAGS}" "-m${MULTILIB_SUFFIX}  ${LD_FLAGS}" "${MULTILIB_SUFFIX}" libs_to_install)
     endif()
 
     # Only build the host version of the jit runtime due to LLVM dependency.
