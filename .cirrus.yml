@@ -83,16 +83,18 @@ install_ubuntu_prerequisites_template: &INSTALL_UBUNTU_PREREQUISITES_TEMPLATE
     if [[ "$EXTRA_CMAKE_FLAGS" = *-DMULTILIB?ON* ]]; then
       dpkg --add-architecture i386
       gcc_pkg="g++-multilib"
+      llvm_pkg="llvm-dev:i386"
       libcurl_pkg="libcurl4 libcurl4:i386"
  
     else
       gcc_pkg="g++"
+      llvm_pkg="llvm-dev"
       libcurl_pkg="libcurl4"
     fi
     apt-get -q update
     apt-get -yq install \
       git-core cmake ninja-build $gcc_pkg \
-      llvm-dev:i386 zlib1g-dev libclang-common-$LIBCLANG_COMMON_VERSION-dev \
+      $llvm_pkg zlib1g-dev libclang-common-$LIBCLANG_COMMON_VERSION-dev \
       $libcurl_pkg curl gdb python tzdata unzip zip \
       $EXTRA_APT_PACKAGES
     # Use ld.gold per default, so that LTO is tested
